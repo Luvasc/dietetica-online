@@ -1,22 +1,14 @@
 <app-header></app-header>
-
 <app-cart></app-cart>
 
-<!-- INICIO -->
-<div id="inicio">
-  <app-hero></app-hero>
-</div>
 
-<!-- CATEGORÍAS -->
+<app-hero></app-hero>
 <app-category-list></app-category-list>
 
-<!-- PRODUCTOS -->
-<section
-  class="featured-products"
-  id="productos"
->
+ 
+<section class="featured-products" id="productos-destacados">
   <div class="featured-heading">
-    <p>SELECCIÓN ESPECIAL</p>
+    <span>Selección especial</span>
 
     <h2>Productos destacados</h2>
 
@@ -31,18 +23,10 @@
         [product]="product"
       ></app-product-card>
     }
+    
   </div>
-</section>
-
-<!-- CÓMO COMPRAR -->
-<div id="como-comprar">
+  </section>
   <app-how-to-buy></app-how-to-buy>
-</div>
-
-<!-- CONTACTO -->
-<div id="contacto">
   <app-contact-cta></app-contact-cta>
-</div>
-
-<!-- FOOTER -->
 <app-footer></app-footer>
+ 
