@@ -1,1 +1,46 @@
-/* You can add global styles to this file, and also import other style files */
+/* =========================
+   ESTILOS GLOBALES
+========================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  width: 100%;
+  max-width: 100%;
+  min-width: 320px;
+  margin: 0;
+  overflow-x: hidden;
+  background: #fffdf8;
+}
+
+img,
+svg {
+  max-width: 100%;
+}
+
+app-root {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Para que el header no tape las secciones al navegar */
+#inicio,
+#productos,
+#como-comprar,
+#contacto {
+  scroll-margin-top: 90px;
+}

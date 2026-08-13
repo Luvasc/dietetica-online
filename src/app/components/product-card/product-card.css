@@ -1,0 +1,286 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.product-card {
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid #e8e0d4;
+  border-radius: 22px;
+
+  display: flex;
+  flex-direction: column;
+
+  background: #fff;
+  box-shadow: 0 12px 34px rgba(43, 55, 38, 0.08);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 42px rgba(43, 55, 38, 0.14);
+}
+
+.product-image {
+  height: 220px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #f2eee5;
+}
+
+.product-image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.product-card:hover .product-image img {
+  transform: scale(1.04);
+}
+
+.favorite-button {
+  width: 38px;
+  height: 38px;
+
+  position: absolute;
+  top: 14px;
+  right: 14px;
+
+  border: 1px solid rgba(45, 71, 42, 0.15);
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.92);
+  color: #2d472a;
+
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.product-body {
+  padding: 22px;
+
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.product-label {
+  color: #7c8d72;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+
+.product-body h3 {
+  margin: 8px 0;
+
+  color: #2d472a;
+
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 24px;
+  line-height: 1.15;
+}
+
+.product-description {
+  min-height: 44px;
+  margin: 10px 0 0;
+
+  color: #6c675f;
+
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.product-price {
+  margin-top: 18px;
+
+  display: block;
+
+  color: #1f2f1d;
+  font-size: 25px;
+  font-weight: 800;
+}
+
+.product-options {
+  margin-top: 16px;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.product-options button {
+  min-width: 58px;
+  min-height: 34px;
+  padding: 0 11px;
+
+  border: 1px solid #d8d0c4;
+  border-radius: 999px;
+
+  background: #faf8f3;
+  color: #59554f;
+
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.product-options button.active {
+  border-color: #344d2d;
+  background: #344d2d;
+  color: #fff;
+}
+
+.add-button {
+  width: 100%;
+  min-height: 46px;
+  margin-top: 20px;
+
+  border: none;
+  border-radius: 999px;
+
+  background: #344d2d;
+  color: #fff;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+
+.add-button:hover {
+  background: #263d22;
+  transform: translateY(-1px);
+}
+
+
+/* =========================
+   CELULAR
+========================= */
+
+@media (max-width: 620px) {
+  .product-card {
+    border-radius: 14px;
+    box-shadow: 0 7px 18px rgba(43, 55, 38, 0.07);
+  }
+
+  .product-card:hover {
+    transform: none;
+  }
+
+  .product-image {
+    height: 150px;
+  }
+
+  .favorite-button {
+    width: 29px;
+    height: 29px;
+
+    top: 8px;
+    right: 8px;
+
+    font-size: 16px;
+  }
+
+  .product-body {
+    padding: 12px;
+  }
+
+  .product-label {
+    font-size: 7px;
+    letter-spacing: 0.8px;
+  }
+
+  .product-body h3 {
+    margin: 6px 0 4px;
+
+    font-size: 17px;
+    line-height: 1.1;
+  }
+
+  .product-description {
+    min-height: 32px;
+    margin-top: 4px;
+
+    font-size: 10px;
+    line-height: 1.35;
+  }
+
+  .product-price {
+    margin-top: 11px;
+
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  .product-options {
+    margin-top: 10px;
+    gap: 5px;
+  }
+
+  .product-options button {
+    min-width: 42px;
+    min-height: 27px;
+    padding: 0 7px;
+
+    font-size: 9px;
+  }
+
+  .add-button {
+    min-height: 37px;
+    margin-top: 12px;
+
+    font-size: 11px;
+  }
+}
+
+
+/* =========================
+   CELULARES MUY CHICOS
+========================= */
+
+@media (max-width: 380px) {
+  .product-image {
+    height: 135px;
+  }
+
+  .product-body {
+    padding: 10px;
+  }
+
+  .product-body h3 {
+    font-size: 16px;
+  }
+
+  .product-description {
+    font-size: 9px;
+  }
+
+  .product-price {
+    font-size: 17px;
+  }
+
+  .product-options button {
+    min-width: 38px;
+    min-height: 25px;
+    padding: 0 6px;
+
+    font-size: 8px;
+  }
+
+  .add-button {
+    min-height: 35px;
+    font-size: 10px;
+  }
+}

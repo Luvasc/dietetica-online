@@ -1,0 +1,240 @@
+.categories-section {
+  padding: 50px 16px 0;
+}
+
+.section-heading {
+  max-width: 650px;
+  margin: 0 auto 45px;
+  text-align: center;
+}
+
+.section-heading span {
+  color: #728269;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.section-heading h2 {
+  margin: 10px 0 12px;
+  color: #2d472a;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 46px;
+  line-height: 1.1;
+}
+
+.section-heading p {
+  margin: 0;
+  color: #69655e;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.categories-grid {
+  width: min(1240px, calc(100% - 32px));
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.category-card {
+  min-width: 0;
+  min-height: 280px;
+
+  position: relative;
+  overflow: hidden;
+
+  border-radius: 24px;
+
+  cursor: pointer;
+
+  box-shadow: 0 12px 30px rgba(44, 57, 39, 0.1);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.category-card:hover {
+  transform: translateY(-3px);
+
+  box-shadow: 0 16px 34px rgba(44, 57, 39, 0.14);
+}
+
+.category-card img {
+  width: 100%;
+  height: 100%;
+
+  position: absolute;
+  inset: 0;
+
+  display: block;
+
+  object-fit: cover;
+
+  transition: transform 0.4s ease;
+}
+
+.category-overlay {
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.58),
+    rgba(0, 0, 0, 0.08)
+  );
+}
+
+.category-content {
+  position: absolute;
+  right: 24px;
+  bottom: 22px;
+  left: 24px;
+
+  color: #fff;
+}
+
+.category-content h3 {
+  margin: 0;
+
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 27px;
+  line-height: 1.08;
+}
+
+.category-content span {
+  display: inline-block;
+
+  margin-top: 8px;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.category-card:hover img {
+  transform: scale(1.07);
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 900px) {
+  .categories-section {
+    padding-top: 55px;
+  }
+
+  .categories-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .category-card {
+    min-height: 230px;
+  }
+
+  .category-content h3 {
+    font-size: 23px;
+  }
+}
+
+
+/* =========================
+   CELULAR
+========================= */
+
+@media (max-width: 600px) {
+  .categories-section {
+    padding: 50px 14px 20px;
+  }
+
+  .section-heading {
+    margin-bottom: 28px;
+  }
+
+  .section-heading span {
+    font-size: 9px;
+    letter-spacing: 1.5px;
+  }
+
+  .section-heading h2 {
+    margin: 8px 0 10px;
+    font-size: 34px;
+  }
+
+  .section-heading p {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .categories-grid {
+    width: 100%;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .category-card {
+    min-width: 0;
+    min-height: 170px;
+
+    border-radius: 16px;
+
+    box-shadow: 0 8px 20px rgba(44, 57, 39, 0.08);
+  }
+
+  .category-content {
+    right: 12px;
+    bottom: 12px;
+    left: 12px;
+  }
+
+  .category-content h3 {
+    font-size: 18px;
+    line-height: 1.05;
+  }
+
+  .category-content span {
+    margin-top: 5px;
+    font-size: 10px;
+  }
+}
+
+
+/* =========================
+   CELULARES MUY CHICOS
+========================= */
+
+@media (max-width: 380px) {
+  .categories-section {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .categories-grid {
+    gap: 8px;
+  }
+
+  .category-card {
+    min-height: 155px;
+  }
+
+  .category-content {
+    right: 10px;
+    bottom: 10px;
+    left: 10px;
+  }
+
+  .category-content h3 {
+    font-size: 16px;
+  }
+
+  .category-content span {
+    font-size: 9px;
+  }
+}

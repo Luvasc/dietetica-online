@@ -1,0 +1,134 @@
+@if (cartService.isOpen()) {
+  <div
+    class="cart-backdrop"
+    role="button"
+    tabindex="0"
+    aria-label="Cerrar carrito"
+    (click)="closeCart()"
+  ></div>
+
+  <aside class="cart-panel" aria-label="Tu pedido">
+    <header class="cart-header">
+      <div>
+        <span>Tu pedido</span>
+        <h2>
+          {{ cartService.totalQuantity() }}
+          producto(s)
+        </h2>
+      </div>
+
+      <button
+        class="close-button"
+        type="button"
+        aria-label="Cerrar carrito"
+        (click)="closeCart()"
+      >
+        ×
+      </button>
+    </header>
+
+    <div class="cart-content">
+      @if (cartService.items().length === 0) {
+        <div class="empty-cart">
+          <span>🛒</span>
+          <h3>Tu pedido está vacío</h3>
+          <p>Agregá productos para comenzar.</p>
+
+          <button type="button" (click)="closeCart()">
+            Ver productos
+          </button>
+        </div>
+      } @else {
+        <div class="cart-items">
+          @for (
+            item of cartService.items();
+            track item.product.id + '-' + item.option.label
+          ) {
+            <article class="cart-item">
+              <img
+                [src]="item.product.image"
+                [alt]="item.product.name"
+              >
+
+              <div class="item-info">
+                <div class="item-heading">
+                  <div>
+                    <h3>{{ item.product.name }}</h3>
+                    <span>{{ item.option.label }}</span>
+                  </div>
+
+                  <button
+                    class="remove-button"
+                    type="button"
+                    aria-label="Eliminar producto"
+                    (click)="remove(item)"
+                  >
+                    ×
+                  </button>
+                </div>
+
+                <div class="item-footer">
+                  <div class="quantity-control">
+                    <button
+                      type="button"
+                      aria-label="Disminuir cantidad"
+                      (click)="decrease(item)"
+                    >
+                      −
+                    </button>
+
+                    <span>{{ item.quantity }}</span>
+
+                    <button
+                      type="button"
+                      aria-label="Aumentar cantidad"
+                      (click)="increase(item)"
+                    >
+                      +
+                    </button>
+                  </div>
+
+                  <strong>
+                    ${{
+                      formatPrice(
+                        item.option.price * item.quantity
+                      )
+                    }}
+                  </strong>
+                </div>
+              </div>
+            </article>
+          }
+        </div>
+      }
+    </div>
+
+    @if (cartService.items().length > 0) {
+      <footer class="cart-footer">
+        <div class="cart-total">
+          <span>Total</span>
+
+          <strong>
+            ${{ formatPrice(cartService.totalPrice()) }}
+          </strong>
+        </div>
+
+        <button
+          class="whatsapp-button"
+          type="button"
+          (click)="sendWhatsAppOrder()"
+        >
+          Enviar pedido por WhatsApp
+        </button>
+
+        <button
+          class="continue-button"
+          type="button"
+          (click)="closeCart()"
+        >
+          Seguir comprando
+        </button>
+      </footer>
+    }
+  </aside>
+}

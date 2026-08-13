@@ -1,0 +1,330 @@
+.hero {
+  width: 100%;
+  background: #f7f1e7;
+  border-bottom: 1px solid #e2d9ca;
+}
+
+.hero-content {
+  width: min(1240px, 100%);
+  min-height: 650px;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: 44% 56%;
+}
+
+.hero-text {
+  min-width: 0;
+  padding: 70px 50px 60px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  position: relative;
+  z-index: 2;
+
+  background: #f7f1e7;
+}
+
+.hero-label {
+  width: fit-content;
+  max-width: 100%;
+  margin-bottom: 20px;
+  padding: 8px 14px;
+
+  border: 1px solid #bfcab8;
+  border-radius: 999px;
+
+  color: #3e5737;
+  background: rgba(255, 253, 248, 0.78);
+
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  max-width: 100%;
+  margin: 0;
+
+  color: #2d472a;
+
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(56px, 5vw, 80px);
+  line-height: 1.04;
+  letter-spacing: -1.5px;
+
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+.hero-description {
+  margin: 26px 0 0;
+
+  color: #343434;
+
+  font-size: 18px;
+  line-height: 1.55;
+}
+
+.hero-secondary {
+  margin: 12px 0 0;
+
+  color: #625f58;
+
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.hero-actions {
+  margin-top: 28px;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.primary-button,
+.secondary-button {
+  min-height: 48px;
+  padding: 0 24px;
+
+  border-radius: 999px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+
+  transition: 0.2s ease;
+}
+
+.primary-button {
+  background: #344d2d;
+  color: #fff;
+}
+
+.secondary-button {
+  border: 1px solid #344d2d;
+
+  color: #344d2d;
+  background: transparent;
+}
+
+.primary-button:hover,
+.secondary-button:hover {
+  transform: translateY(-2px);
+}
+
+.secondary-button:hover {
+  background: #344d2d;
+  color: #fff;
+}
+
+.hero-features {
+  margin-top: 40px;
+
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.feature {
+  min-width: 0;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+}
+
+.feature-icon {
+  flex-shrink: 0;
+
+  font-size: 19px;
+}
+
+.feature strong {
+  color: #2f432b;
+
+  font-size: 12px;
+}
+
+.feature p {
+  margin: 4px 0 0;
+
+  color: #69655e;
+
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.hero-image {
+  min-width: 0;
+  min-height: 650px;
+
+  background: #f7f1e7;
+}
+
+.hero-image img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+  object-position: 64% center;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 950px) {
+  .hero-content {
+    min-height: auto;
+    grid-template-columns: 1fr;
+  }
+
+  .hero-text {
+    padding: 55px 30px;
+  }
+
+  .hero-image {
+    min-height: 470px;
+  }
+
+  .hero-image img {
+    object-position: center;
+  }
+}
+
+
+/* =========================
+   CELULAR
+========================= */
+
+@media (max-width: 650px) {
+  .hero-content {
+    width: 100%;
+    min-height: auto;
+    grid-template-columns: 1fr;
+  }
+
+  .hero-text {
+    width: 100%;
+    padding: 32px 20px 24px;
+  }
+
+  .hero-label {
+    margin-bottom: 18px;
+    padding: 7px 11px;
+
+    font-size: 10px;
+    letter-spacing: 0.5px;
+  }
+
+  .hero h1 {
+    font-size: 42px;
+    line-height: 0.98;
+    letter-spacing: -1px;
+  }
+
+  .hero-description {
+    margin-top: 18px;
+
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .hero-secondary {
+    margin-top: 8px;
+
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .hero-actions {
+    margin-top: 20px;
+
+    flex-direction: column;
+    gap: 9px;
+  }
+
+  .primary-button,
+  .secondary-button {
+    width: 100%;
+    min-height: 48px;
+  }
+
+  .hero-features {
+    margin-top: 26px;
+
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .feature {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .feature-icon {
+    font-size: 17px;
+  }
+
+  .feature strong {
+    font-size: 10px;
+    line-height: 1.2;
+  }
+
+  .feature p {
+    margin-top: 1px;
+
+    font-size: 9px;
+    line-height: 1.3;
+  }
+
+  .hero-image {
+    width: 100%;
+    height: 280px;
+    min-height: 280px;
+  }
+
+  .hero-image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
+
+/* =========================
+   CELULARES MUY CHICOS
+========================= */
+
+@media (max-width: 390px) {
+  .hero-text {
+    padding-left: 17px;
+    padding-right: 17px;
+  }
+
+  .hero h1 {
+    font-size: 39px;
+  }
+
+  .hero-label {
+    font-size: 8px;
+  }
+}

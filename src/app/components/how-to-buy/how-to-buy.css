@@ -1,0 +1,211 @@
+.how-to-buy {
+  padding: 70px 24px 80px;
+  background: #fffdf9;
+}
+
+.how-to-buy-header {
+  max-width: 700px;
+  margin: 0 auto 50px;
+  text-align: center;
+}
+
+.section-label {
+  display: block;
+  margin-bottom: 14px;
+
+  color: #708067;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+}
+
+.how-to-buy-header h2 {
+  margin: 0;
+
+  color: #2d472a;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 48px;
+  line-height: 1.1;
+}
+
+.how-to-buy-header p {
+  margin: 18px 0 0;
+
+  color: #6c675f;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+
+/* =========================
+   TARJETAS
+========================= */
+
+.steps {
+  max-width: 1380px;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.step-card {
+  min-height: 195px;
+  padding: 27px;
+
+  border: 1px solid #e3dbcf;
+  border-radius: 20px;
+
+  background: #faf7f1;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.step-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(43, 55, 38, 0.08);
+}
+
+
+/* =========================
+   PARTE SUPERIOR
+========================= */
+
+.step-top {
+  margin-bottom: 25px;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.step-icon {
+  width: 50px;
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #ddd3c4;
+  border-radius: 50%;
+
+  background: #fffdf8;
+  color: #344d2d;
+}
+
+.step-icon svg {
+  width: 23px;
+  height: 23px;
+
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.step-number {
+  color: #7c8d72;
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+
+/* =========================
+   TEXTO
+========================= */
+
+.step-card h3 {
+  margin: 0 0 10px;
+
+  color: #2d472a;
+
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 21px;
+  line-height: 1.15;
+}
+
+.step-card p {
+  margin: 0;
+
+  color: #6c675f;
+
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 1000px) {
+  .steps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+/* =========================
+   CELULAR
+========================= */
+
+@media (max-width: 620px) {
+  .how-to-buy {
+    padding: 50px 16px 60px;
+  }
+
+  .how-to-buy-header {
+    margin-bottom: 32px;
+  }
+
+  .section-label {
+    font-size: 9px;
+    letter-spacing: 2px;
+  }
+
+  .how-to-buy-header h2 {
+    font-size: 35px;
+  }
+
+  .how-to-buy-header p {
+    margin-top: 13px;
+    font-size: 13px;
+  }
+
+  .steps {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .step-card {
+    min-height: auto;
+    padding: 20px;
+  }
+
+  .step-top {
+    margin-bottom: 18px;
+  }
+
+  .step-icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .step-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .step-card h3 {
+    font-size: 19px;
+  }
+
+  .step-card p {
+    font-size: 12px;
+  }
+}

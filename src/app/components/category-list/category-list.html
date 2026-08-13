@@ -1,0 +1,25 @@
+<section class="categories-section" id="productos">
+  <div class="section-heading">
+    <span>PRODUCTOS DESTACADOS</span>
+    <h2>Categorías</h2>
+    <p>Explorá nuestras opciones y encontrá tus productos favoritos.</p>
+  </div>
+
+  <div class="categories-grid">
+    @for (category of categories; track category.name) {
+      <article class="category-card">
+        <img
+          [src]="category.image"
+          [alt]="category.name"
+        >
+
+        <div class="category-overlay"></div>
+
+        <div class="category-content">
+          <h3>{{ category.name }}</h3>
+          <span>Ver productos →</span>
+        </div>
+      </article>
+    }
+  </div>
+</section>

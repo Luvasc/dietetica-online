@@ -1,0 +1,191 @@
+import {
+  Injectable,
+  PLATFORM_ID,
+  computed,
+  effect,
+  inject,
+  signal
+} from '@angular/core';
+
+import { isPlatformBrowser } from '@angular/common';
+import { Product, ProductOption } from './product';
+
+export interface CartItem {
+  product: Product;
+  option: ProductOption;
+  quantity: number;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class CartService {
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly storageKey = 'almacen-cart';
+
+  private readonly cartItems = signal<CartItem[]>([]);
+  private readonly cartOpen = signal(false);
+
+  readonly items = this.cartItems.asReadonly();
+  readonly isOpen = this.cartOpen.asReadonly();
+
+  readonly totalQuantity = computed(() =>
+    this.cartItems().reduce(
+      (total, item) => total + item.quantity,
+      0
+    )
+  );
+
+  readonly totalPrice = computed(() =>
+    this.cartItems().reduce(
+      (total, item) =>
+        total + item.option.price * item.quantity,
+      0
+    )
+  );
+
+  constructor() {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
+    const savedCart = localStorage.getItem(this.storageKey);
+
+    if (savedCart) {
+      try {
+        const parsedCart = JSON.parse(savedCart) as CartItem[];
+        this.cartItems.set(parsedCart);
+      } catch {
+        localStorage.removeItem(this.storageKey);
+      }
+    }
+
+    effect(() => {
+      localStorage.setItem(
+        this.storageKey,
+        JSON.stringify(this.cartItems())
+      );
+    });
+  }
+
+  addProduct(product: Product, option: ProductOption): void {
+    this.cartItems.update(items => {
+      const existingIndex = items.findIndex(
+        item =>
+          item.product.id === product.id &&
+          item.option.label === option.label
+      );
+
+      if (existingIndex === -1) {
+        return [
+          ...items,
+          {
+            product,
+            option,
+            quantity: 1
+          }
+        ];
+      }
+
+      return items.map((item, index) =>
+        index === existingIndex
+          ? {
+              ...item,
+              quantity: item.quantity + 1
+            }
+          : item
+      );
+    });
+
+    this.openCart();
+  }
+
+  increaseQuantity(item: CartItem): void {
+    this.cartItems.update(items =>
+      items.map(current =>
+        this.isSameItem(current, item)
+          ? {
+              ...current,
+              quantity: current.quantity + 1
+            }
+          : current
+      )
+    );
+  }
+
+  decreaseQuantity(item: CartItem): void {
+    if (item.quantity <= 1) {
+      this.removeItem(item);
+      return;
+    }
+
+    this.cartItems.update(items =>
+      items.map(current =>
+        this.isSameItem(current, item)
+          ? {
+              ...current,
+              quantity: current.quantity - 1
+            }
+          : current
+      )
+    );
+  }
+
+  removeItem(item: CartItem): void {
+    this.cartItems.update(items =>
+      items.filter(
+        current => !this.isSameItem(current, item)
+      )
+    );
+  }
+
+  clearCart(): void {
+    this.cartItems.set([]);
+  }
+
+  openCart(): void {
+    this.cartOpen.set(true);
+  }
+
+  closeCart(): void {
+    this.cartOpen.set(false);
+  }
+
+  toggleCart(): void {
+    this.cartOpen.update(open => !open);
+  }
+
+  buildWhatsAppMessage(): string {
+    const detail = this.cartItems().map(item => {
+      const subtotal =
+        item.option.price * item.quantity;
+
+      return [
+        `• ${item.product.name}`,
+        `  Presentación: ${item.option.label}`,
+        `  Cantidad: ${item.quantity}`,
+        `  Subtotal: $${subtotal.toLocaleString('es-AR')}`
+      ].join('\n');
+    });
+
+    return [
+      'Hola, quiero realizar el siguiente pedido:',
+      '',
+      ...detail,
+      '',
+      `Total: $${this.totalPrice().toLocaleString('es-AR')}`,
+      '',
+      '¿Me confirman disponibilidad?'
+    ].join('\n');
+  }
+
+  private isSameItem(
+    first: CartItem,
+    second: CartItem
+  ): boolean {
+    return (
+      first.product.id === second.product.id &&
+      first.option.label === second.option.label
+    );
+  }
+}

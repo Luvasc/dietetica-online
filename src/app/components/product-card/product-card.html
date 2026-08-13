@@ -1,0 +1,47 @@
+<article class="product-card">
+  <div class="product-image">
+    <img [src]="product.image" [alt]="product.name">
+
+    <button
+      class="favorite-button"
+      type="button"
+      aria-label="Agregar a favoritos"
+    >
+      ♡
+    </button>
+  </div>
+
+  <div class="product-body">
+    <span class="product-label">Producto destacado</span>
+
+    <h3>{{ product.name }}</h3>
+
+    <p class="product-description">
+      {{ product.description }}
+    </p>
+
+    <strong class="product-price">
+      ${{ selectedOption.price.toLocaleString('es-AR') }}
+    </strong>
+
+    <div class="product-options">
+      @for (option of product.options; track option.label) {
+        <button
+          type="button"
+          [class.active]="selectedOption.label === option.label"
+          (click)="selectOption(option)"
+        >
+          {{ option.label }}
+        </button>
+      }
+    </div>
+
+    <button
+      class="add-button"
+      type="button"
+      (click)="addToCart()"
+    >
+      Agregar al pedido
+    </button>
+  </div>
+</article>

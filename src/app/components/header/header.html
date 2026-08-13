@@ -1,0 +1,51 @@
+<header class="header">
+  <div class="header-container">
+
+    <!-- LOGO / MARCA -->
+    <a class="brand" href="#inicio">
+      <div class="brand-name">EL ALMACÉN</div>
+      <div class="brand-subtitle">A GRANEL</div>
+    </a>
+
+    <!-- NAVEGACIÓN -->
+    <nav class="nav">
+      <a href="#inicio">Inicio</a>
+      <a href="#productos">Productos</a>
+      <a href="#como-comprar">Cómo comprar</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+
+    <!-- CARRITO -->
+    <button
+      class="cart-button"
+      type="button"
+      aria-label="Abrir carrito"
+      (click)="toggleCart()"
+    >
+      <span class="cart-icon">
+        <svg
+          viewBox="0 0 24 24"
+          width="20"
+          height="20"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <circle cx="9" cy="20" r="1"></circle>
+          <circle cx="19" cy="20" r="1"></circle>
+          <path
+            d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.6L21 8H6"
+          ></path>
+        </svg>
+      </span>
+
+      <span class="cart-quantity">
+        {{ cartService.totalQuantity() }}
+      </span>
+    </button>
+
+  </div>
+</header>
