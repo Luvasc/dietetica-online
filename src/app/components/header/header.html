@@ -20,6 +20,8 @@
       class="cart-button"
       type="button"
       aria-label="Abrir carrito"
+      aria-controls="cart-dialog"
+      [attr.aria-expanded]="cartService.isOpen()"
       (click)="toggleCart()"
     >
       <span class="cart-icon">

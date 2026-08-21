@@ -1,17 +1,21 @@
 @if (cartService.isOpen()) {
   <div
     class="cart-backdrop"
-    role="button"
-    tabindex="0"
-    aria-label="Cerrar carrito"
+    aria-hidden="true"
     (click)="closeCart()"
   ></div>
 
-  <aside class="cart-panel" aria-label="Tu pedido">
+  <aside
+    id="cart-dialog"
+    class="cart-panel"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="cart-title"
+  >
     <header class="cart-header">
       <div>
         <span>Tu pedido</span>
-        <h2>
+        <h2 id="cart-title">
           {{ cartService.totalQuantity() }}
           producto(s)
         </h2>
@@ -60,7 +64,7 @@
                   <button
                     class="remove-button"
                     type="button"
-                    aria-label="Eliminar producto"
+                    [attr.aria-label]="'Eliminar ' + item.product.name"
                     (click)="remove(item)"
                   >
                     ×
