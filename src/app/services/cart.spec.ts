@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { CartItem, CartService } from './cart';
-import { Product } from './product';
+import { PRODUCTS, Product } from './product';
 
 describe('CartService', () => {
   const storageKey = 'almacen-cart';
@@ -20,6 +20,17 @@ describe('CartService', () => {
   const secondOption = product.options[1];
 
   let service: CartService;
+
+  function restoreFrom(value: unknown): void {
+    TestBed.resetTestingModule();
+    localStorage.setItem(
+      storageKey,
+      typeof value === 'string' ? value : JSON.stringify(value)
+    );
+    TestBed.configureTestingModule({});
+    service = TestBed.inject(CartService);
+    TestBed.tick();
+  }
 
   beforeEach(() => {
     localStorage.removeItem(storageKey);
@@ -44,6 +55,15 @@ describe('CartService', () => {
     expect(service.totalQuantity()).toBe(1);
     expect(service.totalPrice()).toBe(4500);
     expect(service.isOpen()).toBeTrue();
+  });
+
+  it('should persist only product id, option label and quantity', () => {
+    service.addProduct(product, firstOption);
+    TestBed.tick();
+
+    expect(JSON.parse(localStorage.getItem(storageKey) ?? 'null')).toEqual([
+      { productId: 1, optionLabel: '250 g', quantity: 1 }
+    ]);
   });
 
   it('should combine equal products and keep different options separate', () => {
@@ -91,21 +111,69 @@ describe('CartService', () => {
     expect(service.totalQuantity()).toBe(0);
   });
 
-  it('should restore a saved cart from localStorage', () => {
-    const savedItem: CartItem = {
-      product,
-      option: firstOption,
+  it('should restore a saved cart from the reduced format', () => {
+    restoreFrom([{ productId: 1, optionLabel: '250 g', quantity: 2 }]);
+
+    expect(service.items()[0].product).toBe(PRODUCTS[0]);
+    expect(service.items()[0].option).toBe(PRODUCTS[0].options[0]);
+    expect(service.totalQuantity()).toBe(2);
+    expect(service.totalPrice()).toBe(9000);
+  });
+
+  it('should use the current catalog price when restoring', () => {
+    restoreFrom([{
+      productId: 1,
+      optionLabel: '250 g',
+      quantity: 2,
+      price: 1
+    }]);
+
+    expect(service.items()[0].option.price).toBe(PRODUCTS[0].options[0].price);
+    expect(service.totalPrice()).toBe(9000);
+  });
+
+  it('should start empty when stored JSON is corrupt', () => {
+    restoreFrom('{invalid-json');
+
+    expect(service.items()).toEqual([]);
+    expect(localStorage.getItem(storageKey)).toBe('[]');
+  });
+
+  it('should ignore a product that no longer exists', () => {
+    restoreFrom([{ productId: 999, optionLabel: '250 g', quantity: 1 }]);
+
+    expect(service.items()).toEqual([]);
+  });
+
+  it('should ignore an option that no longer exists', () => {
+    restoreFrom([{ productId: 1, optionLabel: '5 kg', quantity: 1 }]);
+
+    expect(service.items()).toEqual([]);
+  });
+
+  [0, -1, 1.5, Number.NaN, '2', null].forEach(quantity => {
+    it(`should ignore invalid quantity ${String(quantity)}`, () => {
+      restoreFrom([{ productId: 1, optionLabel: '250 g', quantity }]);
+
+      expect(service.items()).toEqual([]);
+    });
+  });
+
+  it('should migrate the previous format using current catalog data', () => {
+    const oldItem: CartItem = {
+      product: { ...product, name: 'Nombre viejo' },
+      option: { ...firstOption, price: 1 },
       quantity: 2
     };
 
-    TestBed.resetTestingModule();
-    localStorage.setItem(storageKey, JSON.stringify([savedItem]));
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(CartService);
+    restoreFrom([oldItem]);
 
-    expect(service.items()).toEqual([savedItem]);
-    expect(service.totalQuantity()).toBe(2);
+    expect(service.items()[0].product).toBe(PRODUCTS[0]);
+    expect(service.items()[0].option).toBe(PRODUCTS[0].options[0]);
     expect(service.totalPrice()).toBe(9000);
+    expect(JSON.parse(localStorage.getItem(storageKey) ?? 'null')).toEqual([
+      { productId: 1, optionLabel: '250 g', quantity: 2 }
+    ]);
   });
 
   it('should build a WhatsApp message with item details and total', () => {

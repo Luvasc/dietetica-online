@@ -8,11 +8,17 @@ import {
 } from '@angular/core';
 
 import { isPlatformBrowser } from '@angular/common';
-import { Product, ProductOption } from './product';
+import { PRODUCTS, Product, ProductOption } from './product';
 
 export interface CartItem {
   product: Product;
   option: ProductOption;
+  quantity: number;
+}
+
+interface StoredCartItem {
+  productId: number;
+  optionLabel: string;
   quantity: number;
 }
 
@@ -49,22 +55,20 @@ export class CartService {
       return;
     }
 
-    const savedCart = localStorage.getItem(this.storageKey);
-
-    if (savedCart) {
-      try {
-        const parsedCart = JSON.parse(savedCart) as CartItem[];
-        this.cartItems.set(parsedCart);
-      } catch {
-        localStorage.removeItem(this.storageKey);
-      }
-    }
+    this.cartItems.set(this.restoreCart());
 
     effect(() => {
-      localStorage.setItem(
-        this.storageKey,
-        JSON.stringify(this.cartItems())
-      );
+      const storedItems: StoredCartItem[] = this.cartItems().map(item => ({
+        productId: item.product.id,
+        optionLabel: item.option.label,
+        quantity: item.quantity
+      }));
+
+      try {
+        localStorage.setItem(this.storageKey, JSON.stringify(storedItems));
+      } catch {
+        // The cart remains usable when storage is unavailable.
+      }
     });
   }
 
@@ -177,6 +181,73 @@ export class CartService {
       '',
       '¿Me confirman disponibilidad?'
     ].join('\n');
+  }
+
+  private restoreCart(): CartItem[] {
+    try {
+      const savedCart = localStorage.getItem(this.storageKey);
+
+      if (!savedCart) {
+        return [];
+      }
+
+      const parsedCart: unknown = JSON.parse(savedCart);
+
+      if (!Array.isArray(parsedCart)) {
+        return [];
+      }
+
+      return parsedCart.flatMap(value => {
+        const storedItem = this.readStoredItem(value);
+
+        if (!storedItem) {
+          return [];
+        }
+
+        const product = PRODUCTS.find(
+          current => current.id === storedItem.productId
+        );
+        const option = product?.options.find(
+          current => current.label === storedItem.optionLabel
+        );
+
+        if (!product || !option) {
+          return [];
+        }
+
+        return [{ product, option, quantity: storedItem.quantity }];
+      });
+    } catch {
+      return [];
+    }
+  }
+
+  private readStoredItem(value: unknown): StoredCartItem | null {
+    if (!this.isRecord(value)) {
+      return null;
+    }
+
+    const productId = value['productId'] ??
+      (this.isRecord(value['product']) ? value['product']['id'] : undefined);
+    const optionLabel = value['optionLabel'] ??
+      (this.isRecord(value['option']) ? value['option']['label'] : undefined);
+    const quantity = value['quantity'];
+
+    if (
+      typeof productId !== 'number' ||
+      typeof optionLabel !== 'string' ||
+      typeof quantity !== 'number' ||
+      !Number.isInteger(quantity) ||
+      quantity <= 0
+    ) {
+      return null;
+    }
+
+    return { productId, optionLabel, quantity };
+  }
+
+  private isRecord(value: unknown): value is Record<string, unknown> {
+    return typeof value === 'object' && value !== null;
   }
 
   private isSameItem(
