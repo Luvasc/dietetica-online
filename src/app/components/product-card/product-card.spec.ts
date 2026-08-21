@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProductCard } from './product-card';
+import { PRODUCTS } from '../../services/product';
 
 describe('ProductCard', () => {
   let component: ProductCard;
@@ -14,6 +15,7 @@ describe('ProductCard', () => {
 
     fixture = TestBed.createComponent(ProductCard);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('product', PRODUCTS[0]);
     fixture.detectChanges();
   });
 
